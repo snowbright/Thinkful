@@ -1,3 +1,3 @@
 # Thinkful
-Assignment and project
-Plot basics 
+# Assignment and project
+# Plot basics 
