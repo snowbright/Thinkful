@@ -26,26 +26,14 @@ ORDER BY avg_backers DESC;
 --6. Write a query that shows, for each category, how many campaigns were successful and the average difference per project between dollars pledged and the goal.
 SELECT category, COUNT(*), AVG(usd_pledged-goal) AS avg_diff
 FROM ksprojects
-GROUP BY category, state
-HAVING state='successful';
-
---This is from the solution: why use WHERE? 
-SELECT category, avg(usd_pledged - goal) as raised_over_goal, count(*)
-FROM ksprojects
-WHERE state = 'successful'
-GROUP BY category;
+WHERE state='successful'
+GROUP BY category, state;
 
 --7. Write a query that shows, for each main category, how many projects had zero backers for that category and the largest goal amount for that category (also for projects with zero backers).
 SELECT main_category, COUNT(*), MAX(goal)
 FROM ksprojects
-GROUP BY main_category, backers
-HAVING backers=0; 
-
---This is from the solution
-SELECT main_category, MAX(goal), COUNT(*)
-FROM ksprojects
-WHERE backers = 0
-GROUP BY main_category;
+WHERE backers=0
+GROUP BY main_category; 
 
 --8. For each category, find the average USD per backer, and return only those results for which the average USD per backer is < $50, sorted high to low. Hint: Division by NULL is not possible, so use NULLIF to replace NULLs with 0 in the average calculation.
 SELECT category, AVG(usd_pledged/NULLIF(backers,0)) AS avg_usd_per_backer
@@ -57,14 +45,8 @@ ORDER BY avg_usd_per_backer DESC;
 --9. Write a query that shows, for each main_category, how many successful projects had between 5 and 10 backers.
 SELECT main_category, COUNT(*)
 FROM ksprojects
-GROUP BY main_category, state, backers
-HAVING state='successful' AND backers BETWEEN 5 AND 10; 
-
---This is from the solution
-SELECT main_category, COUNT(*)
-FROM ksprojects
-WHERE state = 'successful' AND backers BETWEEN 5 AND 10
-GROUP BY main_category;
+WHERE state='successful' AND backers BETWEEN 5 AND 10                            
+GROUP BY main_category; 
 
 --10. Get a total of the amount ‘pledged’ for each type of currency grouped by its respective currency. Sort by ‘pledged’ from high to low.
 SELECT currency, SUM(pledged) as total_pledged
