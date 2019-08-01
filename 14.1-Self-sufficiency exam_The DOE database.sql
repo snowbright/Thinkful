@@ -65,3 +65,4 @@ FROM naep LEFT OUTER JOIN finance
 ON naep.id = finance.id
 WHERE naep.year = 2000 AND avg_math_4_score IS NOT NULL AND total_expenditure IS NOT NULL 
 ORDER BY total_expenditure DESC;
+
